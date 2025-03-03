@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/template.css">
+    <script>
+        function loadHTML(id, file) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => document.getElementById(id).innerHTML = data);
+        }
+    </script>
+</head>
+<body onload="loadHTML('header', 'header.html'); loadHTML('footer', 'footer.html');">
+    <div id="header"></div>
+    <br>
+    <div class="text-center">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-auto">
+                <label class="form-label fw-bold mb-0">Bạn đã kiếm được:</label>
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control form-control-sm border-primary" value="" readonly>
+            </div>
+            <div class="col-auto">
+                <label class="form-label mb-0">TLCoin</label>
+            </div>
+        </div>
+    </div><br>
+
+    <center><button class="btn btn-primary" onclick="window.location.href='maketest.html'"; >Làm bài test ngay</button></center>
+    
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h3 class="mb-4">Phiếu rút coin</h3>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Nhập số coin</label>
+                        <input type="number" class="form-control" id="amount" placeholder="Số coin">
+                    </div>
+                    <div class="mb-3">
+                        <label for="available" class="form-label">Số coin khả dụng</label>
+                        <input type="text" class="form-control" id="available" value="" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fee" class="form-label">Phí giao dịch</label>
+                        <input type="text" class="form-control" id="fee" value="5%" readonly>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ngày rút</th>
+                                    <th>Số coin rút</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                                <tr>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                                <tr>
+                                    <td>...</td>
+                                    <td>...</td>
+                                    <td>...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br><br><br>
+    <div id="footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

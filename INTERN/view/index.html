@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page TLCOIN</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/template.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</head>
+<body>
+
+<header class="d-flex justify-content-between align-items-center p-3 bg-white shadow">
+    <div class="logo fw-bold">LOGO TLCOIN</div>
+    <nav>
+        <button class="btn btn-outline-primary me-2" onclick="showLogin()">Đăng nhập</button>
+        <button class="btn btn-primary" onclick="showRegister()">Đăng ký</button>
+    </nav>
+</header>
+
+<!-- Form đăng nhập -->
+<div id="login-form" class="fullscreen-form d-none">
+    <div class="form-box">
+        <span class="close-btn" onclick="hideForms()">&times;</span>
+        <h2 class="text-center fw-bold">Đăng nhập</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="row mb-3">
+                    <label class="col-md-4 col-form-label text-end">Tên tài khoản</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="userName" 
+                            placeholder="Nhập tên tài khoản"
+                            onfocus="this.placeholder=''" 
+                            onblur="this.placeholder='Nhập tên tài khoản'">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-md-4 col-form-label text-end">Mật khẩu</label>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="passWord"
+                            placeholder="Nhập mật khẩu"
+                            onfocus="this.placeholder=''" 
+                            onblur="this.placeholder='Nhập mật khẩu'">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-md-4"></label>
+                    <div class="col-md-8">
+                        <button type="submit" class="btn btn-primary btn-sm px-4">Đăng nhập</button>
+                    </div>
+                </div>
+                <div style="display: none;" id="alertError" class="alert alert-danger" role="alert">
+                    Email hoặc mật khẩu không đúng!
+                </div>
+                <div class="text-center mt-3">
+                    <p>Bạn chưa có tài khoản? 
+                        <a href="#" onclick="switchToRegister()">Đăng ký</a>
+                    </p>
+                </div>  
+            </form>
+    </div>
+</div>
+
+<!-- Form đăng ký -->
+<div id="register-form" class="fullscreen-form d-none">
+    <div class="form-box">
+        <span class="close-btn" onclick="hideForms()">&times;</span>
+        <h2 class="text-center fw-bold">Đăng ký</h2>
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="row mb-3">
+                <label for="username" class="col-sm-4 col-form-label">Tên đăng nhập</label>
+                <div class="col-sm-8">
+                    <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" onfocus="this.removeAttribute('placeholder')" onblur="this.setAttribute('placeholder', 'Tên đăng nhập')">
+                </div>
+                <div style="color: red;font-weight: 400;display: none;" id="userNameError">Tên đăng nhập không được để trống</div>
+            </div>
+            
+            <div class="row mb-3">
+                <label for="email" class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" id="email" class="form-control" placeholder="Email" onfocus="this.removeAttribute('placeholder')" onblur="this.setAttribute('placeholder', 'Email')">
+                </div>
+                <div style="color: red;font-weight: 400; display: none;" id="emailError">Email không được để trống</div>
+            </div>
+    
+            <div class="row mb-3">
+                <label for="password" class="col-sm-4 col-form-label">Mật khẩu</label>
+                <div class="col-sm-8">
+                    <input type="password" id="password" class="form-control" placeholder="Mật khẩu" onfocus="this.removeAttribute('placeholder')" onblur="this.setAttribute('placeholder', 'Mật khẩu')">
+                </div>
+                <div style="color: red;font-weight: 400;display: none;" id="passwordError">Mật khẩu không được để trống</div>
+            </div>
+    
+            <div class="row mb-3">
+                <label for="confirm-password" class="col-sm-4 col-form-label">Xác nhận mật khẩu</label>
+                <div class="col-sm-8">
+                    <input type="password" id="confirm-password" class="form-control" placeholder="Xác nhận mật khẩu" onfocus="this.removeAttribute('placeholder')" onblur="this.setAttribute('placeholder', 'Xác nhận mật khẩu')">
+                </div>
+                <div style="color: red;font-weight: 400;display: none;" id="rePasswordError">Xác nhận mật khẩu không đúng</div>
+            </div>
+    
+            <div class="row mb-3">
+                <label for="metamask" class="col-sm-4 col-form-label">Liên kết Metamask</label>
+                <div class="col-sm-8">
+                    <div class="col-sm-8">
+                        <button type="button" class="btn btn-warning w-100" onclick="showWalletForm()">Kết nối với Metamask</button>
+                    </div>
+                    <p id="wallet-address" class="mt-2 text-success"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+                    <!-- <button type="button" class="btn btn-secondary" onclick="document.getElementById('register').classList.add('d-none')">Hủy</button> -->
+                </div>
+            </div>
+        </form>
+        <p class="mt-3 text-center">
+            Bạn đã có tài khoản? <a href="#" onclick="switchToLogin()">Đăng nhập</a>
+        </p>
+    </div>
+</div>
+
+<!-- Form liên kết Metamask -->
+<div id="wallet-form" class="fullscreen-form d-none">
+    <div class="form-box">
+        <span class="close-btn" onclick="hideWalletForm()">&times;</span>
+        <h2 class="text-center fw-bold">Liên kết ví Metamask</h2>
+
+        <form>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Chọn loại ví *</label>
+                <div class="col-sm-8">
+                    <select class="form-control">
+                        <option>Metamask</option>
+                        <option>Trust Wallet</option>
+                        <option>Coinbase Wallet</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Địa chỉ ví *</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Nhập địa chỉ ví">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-12">
+                    <input type="checkbox" id="agree-wallet">
+                    <label for="agree-wallet">Tôi đồng ý liên kết ví này với tài khoản của tôi</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary">Xác nhận và tiếp tục</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Nội dung chính bên ngoài đăng nhập-->
+<main class="d-flex justify-content-center align-items-center vh-100" style="padding-bottom: 150px;">
+    <div class="popup text-center p-5 rounded shadow" style="background-color: rgb(231, 124, 152); color: rgb(10, 10, 10);">
+        <p>Thi trắc nghiệm tiếng Anh - Nhận TLCoin miễn phí!</p>
+        <h2>“Thi tiếng Anh, nhận TLCoin – Rút ngay về ví Metamask!”</h2>
+        <hr style="border: 2px solid black; opacity: 1;">
+        <div class="buttons mt-3">
+            <button class="btn btn-light me-2" onclick="showLogin()">Bắt đầu ngay</button>
+
+            <button class="btn btn-warning">Kết nối Metamask</button>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-white text-center p-3 shadow fixed-bottom">
+    <a href="#" class="text-decoration-none mx-3">Thông tin liên hệ</a>
+    <a href="#" class="text-decoration-none mx-3">Chính sách & Điều khoản</a>
+    <a href="#" class="text-decoration-none mx-3">Liên kết mạng xã hội</a>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/index.js"></script>
+
+        
+</body>
+</html>
