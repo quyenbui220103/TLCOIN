@@ -14,3 +14,6 @@
 .card-body {
      background-color: #f43f5e; 
 }
+body {
+    padding-top: 60px; /* Điều chỉnh phù hợp với chiều cao navbar */
+}
