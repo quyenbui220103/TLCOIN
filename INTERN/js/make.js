@@ -80,9 +80,19 @@
             renderTests(filteredTests);
         };
 
-        window.startTest = function (id) {
-            alert(`Bắt đầu bài kiểm tra ${id}`);
-            window.location.href = `quiz.html?id=${id}`;
+       window.startTest = function (id) {
+            Swal.fire({
+                title: 'Thông báo!',
+                text: `Bạn sắp bắt đầu bài kiểm tra ${id}`,
+                icon: 'info',
+                confirmButtonText: 'Bắt đầu',
+                showCancelButton: true,
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `quiz.html?id=${id}`;
+                }
+            });
         };
     });
     
