@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container_3 {
+    width: 40%;
+    padding: 10px;
+    border: 2px solid #a855f7;
+    border-radius: 10px;
+    text-align: center;
+}
+.form-group {
+    text-align: center;
+    margin-bottom: 10px;
+    /* justify-items: center; */
+    justify-content: space-between;
+}
+label {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+}
+input {
+    width: 40%;
+    padding: 3px;
+    margin: 3px;
+    border: 2px solid #a855f7;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+}
+

@@ -1,0 +1,25 @@
+
+.navbar { 
+    border-bottom: 2px solid #a78bfa;
+}
+.navbar-nav li a{
+    font-weight: 600;
+}
+.search-bar {
+     max-width: 400px; 
+}
+.card {
+     border-radius: 10px; overflow: hidden; 
+}
+.card-header {
+     background-color: #3b82f6; height: 120px; 
+}
+.card-body {
+     background-color: #f43f5e; 
+}
+
+.ms-auto a{
+    text-decoration: none;
+    font-weight: 600;
+
+}
