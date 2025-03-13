@@ -199,10 +199,10 @@
 </footer>
 
 <script>
+    let BASE_URL_PATH = "https://a72f-2001-ee0-8207-ca18-2de1-f752-a0ff-7042.ngrok-free.app";
     function handleCredentialResponse(response) {
     // Xử lý response từ Google ở đây
-        console.log("Encoded JWT ID token: " + response.credential);
-        fetch('https://localhost:7052/api/user/register-google', {
+        fetch(`${BASE_URL_PATH}/api/user/register-google`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -224,7 +224,7 @@
     function handleCredentialResponseLogin(response) {
     // Xử lý response từ Google ở đây
         console.log("Encoded JWT ID token: " + response.credential);
-        fetch('https://localhost:7052/api/user/login-google', {
+        fetch(`${BASE_URL_PATH}/api/user/login-google`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -234,7 +234,7 @@
         .then(response => response.json())
         .then(data => {
             console.log('Đăng nhập thành công:', data);
-            window.location.href = "homepage.html";
+            window.location.href = "users/homepage.html";
         })
         .catch((error) => {
             console.error('Đăng nhập thất bại:', error);
@@ -251,15 +251,16 @@
           document.getElementById("btn_google"),
           { theme: "outline", size: "large" }  // customization attributes
         );
-        google.accounts.id.renderButton(
-          document.getElementById("btn_google_login"),
-          { theme: "outline", size: "large" }  // customization attributes
-        );
+        
         google.accounts.id.initialize({
           client_id: "745054896208-7uli6ct39hd1svu8dndohr0l2qf28jqa.apps.googleusercontent.com",
           callback: handleCredentialResponseLogin,
           auto_select: true
         });
+        google.accounts.id.renderButton(
+          document.getElementById("btn_google_login"),
+          { theme: "outline", size: "large" }  // customization attributes
+        );
         
         google.accounts.id.prompt();
     }

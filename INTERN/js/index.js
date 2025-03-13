@@ -12,6 +12,7 @@ const rePasswordError = document.getElementById('rePasswordError');
 
 const userLocal = JSON.parse(localStorage.getItem('users')) || [];
 
+const BASE_URL = "https://a72f-2001-ee0-8207-ca18-2de1-f752-a0ff-7042.ngrok-free.app";
 // Xử lý sự kiện submit form
 formRegister.addEventListener('submit', function(e) {
     e.preventDefault(); // Ngăn chặn tải lại trang
@@ -148,7 +149,7 @@ function hideWalletForm() {
         let formDataLogin = new FormData();
         formDataLogin.append("Email", username);
         formDataLogin.append("Password", password)
-        fetch('http://localhost:5076/api/user/login', {
+        fetch(`${BASE_URL}/api/user/login`, {
             method: 'POST',
             body: formDataLogin,
             credentials: 'include'
@@ -168,54 +169,16 @@ function hideWalletForm() {
             // console.log(data)
             localStorage.setItem('access_token', data.access_token);
             // Chuyển hướng sang trang home
-            // window.location.href = "homepage.html";
+            window.location.href = "users/homepage.html";
         })
         .catch(error => {
             console.error("Error: ", error)
             showNotification("Có lỗi xảy ra. Vui lòng thử lại sau!", "error");
         });
-        callAPi()
     }
     
 
-    function callAPi(){
-        let formDataLogin = new FormData();
-        formDataLogin.append("Email", "teacher2@gmail.com");
-        formDataLogin.append("UserName", "teacher2");
-        formDataLogin.append("Password", "Teacher2@");
-        fetch('http://localhost:5076/api/user/register-teacher', {
-            method: 'POST',
-            body: formDataLogin,
-            headers:{
-                'Authorization': 'Bearer '+ localStorage.getItem('access_token')
-            }
-        })
-        .then(res => {
-            if(res.ok){
-                return res.json()
-            }
-            else{
-                return res.text().then(text => {
-                    throw new Error(text ||  "Unknown error")
-                })
-            }
-        })
-        .then(data => {
-            // lưu accesstoken vào local storage 
-            if(data.access_token){
-                localStorage.setItem('accessToken', data.accessToken);
-            }
-            else{
-
-            }
-            // Chuyển hướng sang trang home
-            // window.location.href = "homepage.html";
-        })
-        .catch(error => {
-            console.error("Error: ", error.message)
-            showNotification(error.message, "error");
-        });
-    }
+    
     // Hiển thị thông báo
     function showNotification(message, type) {
         let notification = document.createElement("div");
