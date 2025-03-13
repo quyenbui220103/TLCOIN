@@ -1,0 +1,3 @@
+key1.pem
+key2.pem
+*.pem  # (tùy chọn: bỏ qua tất cả file .pem nếu không cần thiết)
