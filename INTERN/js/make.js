@@ -80,7 +80,7 @@
             renderTests(filteredTests);
         };
 
-        window.startTest = function (id) {
+       window.startTest = function (id) {
             Swal.fire({
                 title: 'Thông báo!',
                 text: `Bạn sắp bắt đầu bài kiểm tra ${id}`,

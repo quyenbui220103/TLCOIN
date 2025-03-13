@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài kiểm tra - TLCoin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/maketest.css">
+    <!-- <link rel="stylesheet" href="../css/template.css"> -->
+    <script>
+        function loadHTML(id, file) {
+            fetch(file)
+                .then(response => response.text())
+                .then(data => document.getElementById(id).innerHTML = data);
+        }
+    </script>
+</head>
+<body onload="loadHTML('header', 'header.html'); loadHTML('footer', 'footer.html');">
+    <div id="header"></div>
+    <br><br>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Danh sách bài kiểm tra</h2>
+        
+        <div class="search-bar mb-3 d-flex justify-content-center">
+            <input type="text" id="searchInput" class="form-control w-50" placeholder="Tìm kiếm bài kiểm tra...">
+            <button class="btn btn-primary ms-2" onclick="searchTests()">Tìm kiếm</button>
+        </div>
+        
+        <div class="row" id="testList">
+            <!-- Các bài kiểm tra sẽ được thêm vào đây bằng JavaScript -->
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../js/make.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

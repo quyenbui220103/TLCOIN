@@ -81,22 +81,21 @@ const PassWord = document.getElementById("passWord");
 const alertError = document.getElementById('alertError');
 
 
-loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    //Validation dữ liệu đầu vào
-    //Lấy dữ liệu từ Local về
-    const userLocal = JSON.parse(localStorage.getItem('users')) || [];
+// loginForm.addEventListener('submit', function(e) {
+//     e.preventDefault();
+//     //Validation dữ liệu đầu vào
+//     //Lấy dữ liệu từ Local về
+//     const userLocal = JSON.parse(localStorage.getItem('users')) || [];
 
-    const findUser = userLocal.find((user) => user.userName === userName.value &&
-         user.password === password.value)
+//     const findUser = userLocal.find((user) => user.userName === userName.value &&
+//          user.password === password.value)
     
-    if(!findUser){
-        alertError.style.display = 'block';
-    }else{
-        window.location.href = "users/homepage.html";
-
-    }
-});
+//     if(!findUser){
+//         alertError.style.display = 'block';
+//     }else{
+//         window.location.href = "template.html";
+//     }
+// });
 
     function showLogin() {
         document.getElementById('login-form').classList.remove('d-none');
@@ -141,30 +140,82 @@ function hideWalletForm() {
     function handleLogin(event) {
         event.preventDefault(); // Ngăn trang load lại
     
-        let username = document.getElementById("login-username").value.trim();
-        let password = document.getElementById("login-password").value.trim();
+        let username = document.getElementById("userName").value.trim();
+        let password = document.getElementById("passWord").value.trim();
     
         // Lấy tài khoản đã lưu trong Local Storage
         let savedAccount = localStorage.getItem("testAccount");
-    
-        if (savedAccount) {
-            savedAccount = JSON.parse(savedAccount); // Chuyển JSON thành Object
-    
-            // Kiểm tra đăng nhập
-            if (username === savedAccount.username && password === savedAccount.password) {
-                showNotification("Đăng nhập thành công! Chuyển hướng...", "success");
-    
-                setTimeout(() => {
-                    window.location.href = "../users/homepage.html"; // Chuyển trang
-                }, 2000);
-            } else {
-                showNotification("Sai tên đăng nhập hoặc mật khẩu!", "error");
+        let formDataLogin = new FormData();
+        formDataLogin.append("Email", username);
+        formDataLogin.append("Password", password)
+        fetch('http://localhost:5076/api/user/login', {
+            method: 'POST',
+            body: formDataLogin,
+            credentials: 'include'
+        })
+        .then(res => {
+            if(res.ok){
+                return res.json()
             }
-        } else {
-            showNotification("Không tìm thấy tài khoản!", "error");
-        }
+            else{
+                console.log(data);
+                showNotification("Emal hoặc mật khẩu bị sai: " + data.message, "error")
+                throw new Error("Eorro api not return status code 200");
+            }
+        })
+        .then(data => {
+            // lưu accesstoken vào local storage 
+            // console.log(data)
+            localStorage.setItem('access_token', data.access_token);
+            // Chuyển hướng sang trang home
+            // window.location.href = "homepage.html";
+        })
+        .catch(error => {
+            console.error("Error: ", error)
+            showNotification("Có lỗi xảy ra. Vui lòng thử lại sau!", "error");
+        });
+        callAPi()
     }
     
+
+    function callAPi(){
+        let formDataLogin = new FormData();
+        formDataLogin.append("Email", "teacher2@gmail.com");
+        formDataLogin.append("UserName", "teacher2");
+        formDataLogin.append("Password", "Teacher2@");
+        fetch('http://localhost:5076/api/user/register-teacher', {
+            method: 'POST',
+            body: formDataLogin,
+            headers:{
+                'Authorization': 'Bearer '+ localStorage.getItem('access_token')
+            }
+        })
+        .then(res => {
+            if(res.ok){
+                return res.json()
+            }
+            else{
+                return res.text().then(text => {
+                    throw new Error(text ||  "Unknown error")
+                })
+            }
+        })
+        .then(data => {
+            // lưu accesstoken vào local storage 
+            if(data.access_token){
+                localStorage.setItem('accessToken', data.accessToken);
+            }
+            else{
+
+            }
+            // Chuyển hướng sang trang home
+            // window.location.href = "homepage.html";
+        })
+        .catch(error => {
+            console.error("Error: ", error.message)
+            showNotification(error.message, "error");
+        });
+    }
     // Hiển thị thông báo
     function showNotification(message, type) {
         let notification = document.createElement("div");
@@ -199,8 +250,9 @@ function hideWalletForm() {
     `;
     document.head.appendChild(style);
     
-
-
+function getValueLocalStorage(key){
+    return localStorage.getItem(key);
+}
 
 function handleRegister(event) {
     event.preventDefault(); // Ngừng việc gửi form mặc định
@@ -267,7 +319,7 @@ document.querySelectorAll('.nav-item a').forEach(link => {
 
         console.log("Chuyển hướng đến:", page); // Debug kiểm tra
 
-        if (page === '../users/maketest.html') {
+        if (page === 'maketest.html') {
             window.location.href = page; // Load lại trang nếu là maketest.html
         } else {
             loadContent(page); // Nếu là trang khác, tải bằng fetch()
