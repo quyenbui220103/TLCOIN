@@ -23,9 +23,13 @@ const addNewQuiz = async (req, res) => {
         let { title, description, exam_duration, created_by_teacher, level } = req.body
 
         let data = await addNewQuizService(title, description, exam_duration, created_by_teacher, level)
+        //console.log(data)
         res.status(200).json({
             EC: 0,
             EM: 'Added new quiz',
+            DT: {
+                id: data
+            }
         })
     } catch (error) {
         res.status(500).json({

@@ -8,7 +8,9 @@ const getAllQuizService = async () => {
 
 const addNewQuizService = async (title, description, exam_duration, created_by_teacher, level) => {
     const sql = `insert into Quiz (title, description, exam_duration, created_by_teacher, level) values (?,?,?,?,?)`
-    await pool.execute(sql, [title, description, exam_duration, created_by_teacher, level]) // luôn đặt biến trong [] với prepared statement
+    const [result] = await pool.execute(sql, [title, description, exam_duration, created_by_teacher, level]) // luôn đặt biến trong [] với prepared statement
+    console.log(result)
+    return result.insertId; //trả về id quiz
 }
 
 const deleteQuizService = async (quiz_id) => {
